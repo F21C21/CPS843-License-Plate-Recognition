@@ -38,43 +38,7 @@ CPS843-License-Plate-Recognition/
 └── README.md
 ```
 
-## Getting Started
-
-Prerequisites
-
-MATLAB R2018b or newer (R2021a recommended)  
-Image Processing Toolbox
-
-Installation
-
-git clone https://github.com/F21C21/CPS843-License-Plate-Recognition.git  
+🚀 Getting StartedPrerequisitesMATLAB (R2018b or newer recommended)Image Processing ToolboxInstallation & UsageClone the repositoryBashgit clone [https://github.com/F21C21/CPS843-License-Plate-Recognition.git](https://github.com/F21C21/CPS843-License-Plate-Recognition.git)
 cd CPS843-License-Plate-Recognition
-
-Running the Application
-
->> LicensePlateGUI
-
-Do not run recognize_character_v2.m directly.  
-This function must be called from the GUI pipeline.
-
-## Processing Workflow
-
-1. Load an image from the test_images folder.
-2. Preprocess the image (grayscale, histogram equalization, edge detection).
-3. Localize the license plate region.
-4. Segment individual characters.
-5. Perform template-based recognition.
-6. Display the recognized license plate string.
-
-## Visualization
-
-Output | Description  
-Original Image | Raw vehicle image  
-Edge Map | Canny edge detection result  
-Final Result | Recognized license plate text
-
-## License
-
-This project is licensed under the MIT License.
-
-Maintained by FC.
+Prepare EnvironmentEnsure the templates_ontario and templates_multi folders are in the same directory as the scripts.Run the ApplicationOpen MATLAB and run the main GUI file:Matlab>> LicensePlateGUI
+> Note: Do not run recognize_character_v2.m directly, as it requires inputs passed from the main GUI pipeline.Process an ImageClick "Load Image" in the GUI.Select a sample from the test_images/ folder.The system will display the Edge Map and the final recognized text string.⚙️ Technical DetailsPreprocessing (preprocess_image.m)The raw image undergoes Grayscale Conversion followed by Histogram Equalization to normalize brightness. Canny Edge Detection is then applied to generate a binary map of significant contours, effectively separating the plate boundaries from the vehicle body.Segmentation & RecognitionLocalization (locate_plate.m): Identifies the rectangular plate region based on edge density and aspect ratio constraints.Segmentation (segment_characters.m): Splits the plate into individual characters using vertical projection profiles.Recognition (recognize_character_v2.m): Compares segmented characters against the loaded templates using 2D correlation.📊 VisualizationThe GUI provides visual feedback for the recognition process:ViewDescriptionOriginal ImageThe raw input loaded from the test set.Edge MapOutput of the Canny operator, highlighting structural features.Final ResultThe recognized alphanumeric string overlaid on the interface.📝 LicenseDistributed under the MIT License. See LICENSE for more information.Maintained by FC.
