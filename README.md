@@ -1,54 +1,95 @@
-# CPS843-License-Plate-Recognition
-A MATLAB-based Automatic Number Plate Recognition (ANPR) system featuring a custom GUI. Optimized for North American (Ontario) license plates using a hybrid approach of template matching and structural feature analysis.
-MATLAB License Plate Edge Detection and Analysis
-Overview
-This project implements a MATLAB script for the preprocessing and feature extraction of license plate images. The workflow focuses on grayscale conversion, pixel intensity analysis through histograms, and structural feature extraction using the Canny edge detection algorithm. This process serves as the foundational stage for character segmentation and recognition.
+# MATLAB License Plate Recognition System
 
-Features
-Grayscale Conversion: Transforms raw RGB images into grayscale to reduce computational complexity.
+![MATLAB](https://img.shields.io/badge/MATLAB-R2021a-orange.svg)
+![GUI](https://img.shields.io/badge/Interface-GUI-blueviolet.svg)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)
+![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)
 
-Histogram Analysis: Generates gray-level histograms to visualize the distribution of pixel intensities, aiding in contrast and exposure assessment.
+## 📖 Overview
 
-Edge Detection: Applies the Canny operator to detect high-frequency components, effectively outlining character boundaries and plate edges.
+This repository hosts a complete **Automatic License Plate Recognition (ALPR)** system implemented in MATLAB.
 
-Requirements
-MATLAB (R2018b or later recommended)
+Designed for the **CPS843** course project, the system features a user-friendly **Graphical User Interface (GUI)** to process vehicle images. It integrates a full computer vision pipeline—from raw image preprocessing (grayscale conversion, histogram analysis, edge detection) to character segmentation and template-based recognition—with specific optimization for **Ontario, Canada** license plates.
 
-Image Processing Toolbox
+## ⚙️ Key Features
 
-File Structure
-Plaintext
+* **Interactive GUI**: User-friendly interface (`LicensePlateGUI`) for seamless image loading and analysis.
+* **Advanced Preprocessing**:
+    * **Histogram Analysis**: Evaluates illumination distribution for adaptive thresholding.
+    * **Canny Edge Detection**: Extracts high-precision structural boundaries of the plates.
+* **Robust Recognition**:
+    * **Template Matching**: Correlation coefficient matching against a custom database (`templates_ontario`).
+    * **Segmentation**: Vertical projection histograms for isolating individual characters.
+* **Smart Post-processing**: Logic filters to refine OCR results and reduce false positives.
 
-.
-├── main.m           # Primary processing script
-├── plate_image.jpg  # Input image file
-└── README.md        # Project documentation
-Algorithm Description
-Preprocessing: The script imports the source image and converts it from the RGB color space to grayscale using the standard luminosity function.
+## 📂 Repository Structure
 
-Statistical Analysis: It computes the frequency of each gray level (0-255) and plots the histogram. This step is crucial for determining if dynamic thresholding is required.
+```text
+CPS843-License-Plate-Recognition/
+├── templates_multi/          # Template data for general license plates
+├── templates_ontario/        # Specific templates for Ontario plates
+├── test_images/              # Sample images for testing
+├── imgfildata.mat            # Matfile containing image/template data
+├── LicensePlateGUI.m         # [ENTRY POINT] Main GUI application script
+├── load_multi_templates.m    # Helper script to load template databases
+├── locate_plate.m            # Algorithm to isolate the plate region
+├── preprocess_image.m        # Grayscale conversion & Canny edge detection
+├── segment_characters.m      # Character segmentation logic
+├── recognize_character_v2.m  # OCR core recognition algorithm
+├── smart_postprocess.m       # Result refinement logic
+└── README.md
+## 🚀 Getting Started
 
-Feature Extraction: The script utilizes the Canny edge detector. This method finds the intensity gradients in the image, suppresses non-maximum pixels, and uses hysteresis thresholding to link edges.
+### Prerequisites
+* **MATLAB** (R2018b or newer recommended)
+* **Image Processing Toolbox**
 
-Usage
-Ensure the input image is located in the root directory.
+### Installation & Usage
 
-Open the main script in MATLAB.
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/F21C21/CPS843-License-Plate-Recognition.git
+    cd CPS843-License-Plate-Recognition
+    ```
 
-Execute the code.
+2.  **Prepare Environment**
+    Ensure the `templates_ontario` and `templates_multi` folders are in the same directory as the scripts.
 
-The program will generate two figure windows: one displaying the intensity histogram and another showing the binary edge map.
+3.  **Run the Application**
+    Open MATLAB and run the main GUI file:
+    ```matlab
+    >> LicensePlateGUI
+    ```
+    > **Note:** Do not run `recognize_character_v2.m` directly, as it requires inputs passed from the main GUI pipeline.
 
-Code Overview
-The core logic relies on the following MATLAB functions:
+4.  **Process an Image**
+    * Click **"Load Image"** in the GUI.
+    * Select a sample from the `test_images/` folder.
+    * The system will display the Edge Map and the final recognized text string.
 
-Matlab
+## ⚙️ Technical Details
 
-% Convert to grayscale
-I_gray = rgb2gray(I);
+### Preprocessing (`preprocess_image.m`)
+The raw image undergoes **Grayscale Conversion** followed by **Histogram Equalization** to normalize brightness. **Canny Edge Detection** is then applied to generate a binary map of significant contours, effectively separating the plate boundaries from the vehicle body.
 
-% Generate Histogram
-imhist(I_gray);
+### Segmentation & Recognition
+* **Localization (`locate_plate.m`)**: Identifies the rectangular plate region based on edge density and aspect ratio constraints.
+* **Segmentation (`segment_characters.m`)**: Splits the plate into individual characters using vertical projection profiles.
+* **Recognition (`recognize_character_v2.m`)**: Compares segmented characters against the loaded templates using 2D correlation.
 
-% Apply Canny Edge Detection
-BW = edge(I_gray, 'canny');
+## 📊 Visualization
+
+The GUI provides visual feedback for the recognition process:
+
+| View | Description |
+| :--- | :--- |
+| **Original Image** | The raw input loaded from the test set. |
+| **Edge Map** | Output of the Canny operator, highlighting structural features. |
+| **Final Result** | The recognized alphanumeric string overlaid on the interface. |
+
+## 📝 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+*Maintained by FC.*
