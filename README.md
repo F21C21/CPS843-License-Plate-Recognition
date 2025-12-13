@@ -36,7 +36,7 @@ CPS843-License-Plate-Recognition/
 ├── recognize_character_v2.m
 ├── smart_postprocess.m
 └── README.md
-
+```
 
 ## Getting Started
 
