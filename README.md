@@ -22,6 +22,7 @@ Designed for the CPS843 course project, the system provides a GUI-based pipeline
 
 ## Repository Structure
 
+```text
 CPS843-License-Plate-Recognition/
 ├── templates_multi/
 ├── templates_ontario/
@@ -35,6 +36,7 @@ CPS843-License-Plate-Recognition/
 ├── recognize_character_v2.m
 ├── smart_postprocess.m
 └── README.md
+
 
 ## Getting Started
 
