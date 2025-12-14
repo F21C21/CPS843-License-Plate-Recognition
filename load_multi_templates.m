@@ -176,3 +176,27 @@ end
 
 end
 
+function template = generate_standard_template(c, target_size)
+    fig = figure('Visible', 'off', 'Position', [0, 0, 100, 150]);
+    ax = axes('Position', [0, 0, 1, 1]);
+    
+    text(0.5, 0.5, c, 'FontSize', 80, 'FontWeight', 'bold', ...
+         'HorizontalAlignment', 'center', 'VerticalAlignment', 'middle', ...
+         'FontName', 'Arial');
+    axis off;
+    xlim([0, 1]);
+    ylim([0, 1]);
+    
+    frame = getframe(ax);
+    img = frame.cdata;
+    close(fig);
+    
+    img = rgb2gray(img);
+    img = double(img) / 255;
+    img = img < 0.5;
+    
+    template = imresize(double(img), target_size);
+    template = template > 0.5;
+    template = double(template);
+end
+
